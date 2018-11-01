@@ -4,8 +4,10 @@
   that use two tokens other than the operator. Implements the execute command inherited from the
   Expr_Command interface and declares a new pure virtual method evaluate for sub classes to implement */
 
+#ifndef _BIN_EXPR_COMMAND_
+#define _BIN_EXPR_COMMAND_
+
 #include "Expr_Command.h"
-#include "Stack.h"
 
 class Bin_Expr_Command : public Expr_Command
 {
@@ -24,3 +26,5 @@ public:
   // To be implemented in subclasses with the specific evaluation of the subclasses expression operation
   virtual int evaluate (int firstNum, int secondNum) const = 0;
 };
+
+#endif

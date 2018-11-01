@@ -5,22 +5,40 @@
 
   This class contains the stack reference and the integer number as members */
 
-class Num_Expr_Command : public Bin_Expr_Command
+#ifndef _NUM_EXPR_COMMAND_
+#define _NUM_EXPR_COMMAND_
+
+#include "Expr_Command.h"
+
+class Num_Expr_Command : public Expr_Command
 {
 public:
+  // Default Constructor
+  Num_Expr_Command()
+  : next_int_()
+  {}
+
   // Initializing constructor with the next operand to be pushed to the stack
-  Num_Expr_Command(int nextInt)
-  : nextInt_(nextInt)
+  Num_Expr_Command(int next_int)
+  : next_int_(next_int)
   {}
 
   // Pushes the next integer in the expression to the stack of current operands. Declared virtual for further
   // extension if necessary
-  virtual void execute(void)
+  virtual void execute(Stack <int> & currentOperands)
   {
-    currentOperands_.push(nextInt_);
+    currentOperands.push(next_int_);
+  }
+
+  // Setter method for nextInt
+  void set_next_int(int next_int)
+  {
+    this->next_int_ = next_int;
   }
 
 private:
   // Next Integer from postfix expression
-  int nextInt;
+  int next_int_;
 };
+
+#endif

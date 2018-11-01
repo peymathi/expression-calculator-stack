@@ -57,7 +57,7 @@ void Stack <T>::push (T element)
 // pop
 //
 template <typename T>
-void Stack <T>::pop (void)
+T Stack <T>::pop (void)
 {
 	// Test to see if the stack is empty, if it is then throw stack_is_empty Exception
 	if(this->is_empty())
@@ -65,9 +65,14 @@ void Stack <T>::pop (void)
 		throw empty_exception();
 	}
 
+	// Save the top element
+	T top_element = this->data_[this->cur_size_ - 1];
+
 	// Resize the array down by one
 	this->data_.resize(this->data_.size() - 1);
 	this->cur_size_ -= 1;
+
+	return top_element;
 }
 
 //

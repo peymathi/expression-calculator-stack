@@ -21,6 +21,7 @@ project (assignment3) {
     Multiply_Expr_Command.h
     Divide_Expr_Command.h
     Mod_Expr_Command.h
+    Array_Iterator.h
   }
 
   Inline_Files {
@@ -28,6 +29,7 @@ project (assignment3) {
     Stack.inl
     Array.inl
     Array_Base.inl
+    Array_Iterator.inl
   }
 
   Source_Files {
@@ -39,5 +41,6 @@ project (assignment3) {
     Stack.cpp
     Array.cpp
     Array_Base.cpp
+    Array_Iterator.cpp
   }
 }

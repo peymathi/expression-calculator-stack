@@ -90,6 +90,10 @@ public:
 private:
   /// Maximum size of the array.
   size_t max_size_;
+
+  // Declares Array_Iter a friend class so that it can iterate this object without unneccessary bounds check
+  template <typename U>
+  friend class Array_Iterator;
 };
 
 #include "Array.cpp" // Include source file because this is a template class

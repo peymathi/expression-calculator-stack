@@ -4,8 +4,10 @@
 // present in the class structure in order to provide extension to single operand commands such as factorial,
 // square root, and power operations
 
+#ifndef _UNARY_EXPR_COMMAND_
+#define _UNARY_EXPR_COMMAND_
+
 #include "Expr_Command.h"
-#include "Stack.h"
 
 class Unary_Expr_Command : public Expr_Command
 {
@@ -24,3 +26,5 @@ public:
   // and return it in order to be used in the execute() method
   virtual int evaluate(int operand) = 0;
 };
+
+#endif
