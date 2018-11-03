@@ -8,7 +8,7 @@
 
 #include "Num_Expr_Command.h"
 #include "Add_Expr_Command.h"
-#include "Sub_Expr_Command.h"
+#include "Subtract_Expr_Command.h"
 #include "Multiply_Expr_Command.h"
 #include "Divide_Expr_Command.h"
 #include "Mod_Expr_Command.h"
@@ -16,8 +16,7 @@
 class Expr_Command_Factory
 {
 public:
-  // Destructor
-  virtual ~Expr_Command_Factory() = 0;
+  /* @DRHILL - For some reason, putting a destructor in this class causes errors. Could you explain why this is? */
 
   // Method that creates a new Num_Expr_Command
   virtual Num_Expr_Command * create_number_command (int num) = 0;
@@ -26,7 +25,7 @@ public:
   virtual Add_Expr_Command * create_add_command (void) = 0;
 
   // Method that creates a new Sub_Expr_Command
-  virtual Sub_Expr_Command * create_sub_command (void) = 0;
+  virtual Subtract_Expr_Command * create_sub_command (void) = 0;
 
   // Method that creates a new Multiply_Expr_Command
   virtual Multiply_Expr_Command * create_multiply_command (void) = 0;
@@ -39,10 +38,12 @@ public:
 
 private:
   // Blocks the use of the copy constructor
-  Expr_Command_Factory(const Expr_Command_Factory & );
+  //Expr_Command_Factory(const Expr_Command_Factory & );
 
   // Blocks the use of the assignment operator with this object
-  const Expr_Command_Factory & operator = (const Expr_Command_Factory &);
+  //const Expr_Command_Factory & operator = (const Expr_Command_Factory &);
 };
+
+#include "Expr_Command_Factory.inl"
 
 #endif

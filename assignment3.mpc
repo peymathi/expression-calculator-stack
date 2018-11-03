@@ -37,6 +37,7 @@ project (assignment3) {
 
   Source_Files {
     driver.cpp
+    Stack_Expr_Command_Factory.cpp
   }
 
   Template_Files {

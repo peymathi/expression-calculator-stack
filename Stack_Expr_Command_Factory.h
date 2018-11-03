@@ -15,7 +15,7 @@ class Stack_Expr_Command_Factory : public Expr_Command_Factory
 public:
   // Initializing constructor. Takes in one parameter which is a reference to the current Stack
   Stack_Expr_Command_Factory(Stack<int> & currentStack);
-
+  
   // Creates a new number command
   virtual Num_Expr_Command * create_number_command (int num);
 
@@ -23,7 +23,7 @@ public:
   virtual Add_Expr_Command * create_add_command (void);
 
   // Creates a new subtract command
-  virtual Sub_Expr_Command * create_sub_command (void);
+  virtual Subtract_Expr_Command * create_sub_command (void);
 
   // Creates a new multiplication command
   virtual Multiply_Expr_Command * create_multiply_command (void);
@@ -39,5 +39,7 @@ private:
   Stack <int> & currentStack_;
 
 };
+
+#include "Stack_Expr_Command_Factory.inl"
 
 #endif

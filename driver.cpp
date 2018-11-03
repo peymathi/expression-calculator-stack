@@ -6,54 +6,200 @@
 #include "Mod_Expr_Command.h"
 #include "Array_Iterator.h"
 #include "Stack_Expr_Command_Factory.h"
+#include "Unary_Expr_Command.h"
 
-void runCommands(Array<Command*> commands, Stack<int> * numbers)
+// This is the client for the expression evaluator. I was considering making a wrapper class, but I ran out of time
+
+void infix_to_postfix(const std::string & infixString, Expr_Command_Factory & factory, Array<Expr_Command*> & postfix)
 {
-	for(Array_Iterator iter(commands); !iter.is_done(); iter.advance())
+	// Stream for parsing the infix string
+	std::istringstream input(infixString);
+
+	// Token which will be used to make a command
+	std::string token;
+
+	// Current indice of the postfix expression
+	size_t indice = 0;
+
+	// Temporary container for a command object to hold a command before it's decided where to put it
+	Expr_Command * tempCommand;
+
+	// Stack used for infix to postfix alogorithm. Holds operator commands
+	Stack<std::string> operatorTokens;
+
+	// Runs until the end of stream
+	while(!input.eof())
 	{
-		iter->evaluate(*numbers);
+		// Assign the current input to the token string
+		input >> token;
+
+		// Create command objects based on what the token is
+		// Addition, Subtraction, Multiply, Division, Modulus Operators
+		if(token == "+" || token == "-" || token == "*" || token == "/" || token == "%")
+		{
+			operatorTokens.push(token);
+		}
+
+		// Open
+		else if(token == "(")
+		{
+			operatorTokens.push(token);
+		}
+
+		// Close. Pop's all tokens off the stack and adds them to postfix expression as operators until
+		// open is found.
+		else if(token == ")")
+		{
+			while(true)
+			{
+				token = operatorTokens.pop();
+				if(token == "(")
+				{
+					operatorTokens.pop();
+					break;
+				}
+
+				else if(token == "+")
+				{
+					tempCommand = factory.create_add_command();
+					postfix[indice] = tempCommand;
+					indice++;
+				}
+
+				else if(token == "-")
+				{
+					tempComand = factory.create_sub_command();
+					postfix[indice] = tempCommand;
+					indice++;
+				}
+
+				else if(token == "*")
+				{
+					tempCommand = factory.create_multiply_command();
+					postfix[indice] = tempCommand;
+					indice++;
+				}
+
+				else if(token == "/")
+				{
+					tempCommand = factory.create_divide_command();
+					postfix[indice] = tempCommand;
+					indice++;
+				}
+
+				else if(token == "%")
+				{
+					tempCommand = factory.create_mod_command();
+					postfix[indice] = tempCommand;
+					indice++;
+				}
+			}
+		}
+
+		// Space
+		else if(token == " ")
+		{}
+
+		// Number
+		else
+		{
+			postfix[indice] == factory.create_num_command(int(token));
+			indice++;
+		}
+
 	}
 
-	std::cout << numbers->top() << std::endl;
+	// Pop all elements off stack and make them command objects on the array of commands
+	while(!operatorTokens.is_empty())
+	{
+		token == operatorTokens.pop();
+		if(token == "+")
+		{
+			postfix[indice] = factory.create_add_command();
+			indice++;
+		}
+
+		else if(token == "-")
+		{
+			postfix[indice] = factory.create_sub_command();
+			indice++;
+		}
+
+		else if(token == "*")
+		{
+			postfix[indice] = factory.create_multiply_command();
+			indice++
+		}
+
+		else if(token == "/")
+		{
+			postfix[indice] = factory.create_divide_command();
+			indice++;
+		}
+
+		else if(token == "%")
+		{
+			postfix[indice] = factory.create_mod_command();
+			indice++;
+		}
+	}
+
+
 }
 
 int main()
 {
-	// Test the command factory
-	Command * cmd;
-	Array<Command*> commands = new Array<Command*>(10);
-	Stack<int> * numbers = new Stack<int>();
-	Stack_Expr_Command_Factory * factory = new Stack_Expr_Command_Factory(*numbers);
+	std::string userInput;
 
-	cmd = factory->create_num_command(10);
-	commands[0] = cmd;
+	while(userInput != "QUIT")
+	std::cout << "Enter your expression or type QUIT: ";
+	std::cin >> userInput;
+	std::cout << std::endl;
+	size_t arraySize = 0;
 
-	cmd = factory->create_num_command(10);
-	commands[1] = cmd;
+	std::istringstream input(userInput);
+	std::string token;
 
-	cmd = factory->create_num_command(10);
-	commands[2] = cmd;
+	while(!input.eof())
+	{
+		input >> token;
+		if(token == "+")
+		{
+			arraySize++;
+		}
 
-	cmd = factory->create_num_command(10);
-	commands[3] = cmd;
+		else if(token == "-")
+		{
+			arraySize++;
+		}
 
-	cmd = factory->create_add_command();
-	commands[4] = cmd;
+		else if(token == "*" || token == "/" || token == "%")
+		{
+			arraySize++;
+		}
 
-	cmd = factory->create_sub_command();
-	commands[5] = cmd;
+		else if(token == "(" || token == ")" || token == " ")
+		{}
 
-	cmd = factory->create_num_command(10);
-	commands[6] = cmd;
+		else
+		{
+			arraySize++;
+		}
+	}
 
-	cmd = factory->create_num_command(10);
-	commands[7] = cmd;
+	Array<Expr_Command*> * postfix = new Array<Expr_Command*>(arraySize);
+	Expr_Command_Factory factory = Expr_Command_Factory();
+	std::string infix;
 
-	cmd = factory->create_mod_command();
-	commands[8] = cmd;
+	infix_to_postfix(infix, factory, *postfix);
 
-	cmd = factory->create_div_command();
-	commands[9] = cmd;
+	Stack<int> numbers = Stack<int>();
 
-	return 0;
+	// Evaluate Postfix expression
+	for(Array_Iterator iter(*postfix); !iter.is_done(); iter.advance())
+	{
+		(*iter)->execute(numbers);
+	}
+
+	std::cout << "Answer: " << numbers.pop() << std::endl;
 }

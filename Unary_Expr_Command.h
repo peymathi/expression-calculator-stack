@@ -1,8 +1,6 @@
 /* I pledge that I have neither given nor received any help on this assignment */
 
-// This class is a subclass of Expr_Command. Right now this class is not used in the calculator, but it is
-// present in the class structure in order to provide extension to single operand commands such as factorial,
-// square root, and power operations
+// This class is a subclass of Expr_Command. It is used for single operator commands.
 
 #ifndef _UNARY_EXPR_COMMAND_
 #define _UNARY_EXPR_COMMAND_
