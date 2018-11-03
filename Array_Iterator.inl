@@ -4,6 +4,7 @@
 
 // Checks if the iterator is done
 template <typename T>
+inline
 bool Array_Iterator<T>::is_done(void)
 {
   return this->currentIteration_ >= this->array_.cur_size_;
@@ -11,6 +12,7 @@ bool Array_Iterator<T>::is_done(void)
 
 // Advances the iterator
 template <typename T>
+inline
 void Array_Iterator<T>::advance(void)
 {
   this->currentIteration_++;
@@ -18,6 +20,7 @@ void Array_Iterator<T>::advance(void)
 
 // Overload of '*' operator
 template <typename T>
+inline
 T & Array_Iterator<T>::operator * (void)
 {
   return this->array_.data_[this->currentIteration_];
@@ -25,6 +28,7 @@ T & Array_Iterator<T>::operator * (void)
 
 // Overload of '->' operator
 template <typename T>
+inline
 T * Array_Iterator<T>::operator -> (void)
 {
   return &this->array_.data_[this->currentIteration_];
