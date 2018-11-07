@@ -8,6 +8,9 @@
 
 #include "Bin_Expr_Command.h"
 
+// COMMENT: Do not write implementation code in the header file. Create
+// a separate .cpp file for the implementation.
+
 class Mod_Expr_Command : public Bin_Expr_Command
 {
 public:
