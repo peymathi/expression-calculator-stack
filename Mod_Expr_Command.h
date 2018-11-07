@@ -11,6 +11,8 @@
 // COMMENT: Do not write implementation code in the header file. Create
 // a separate .cpp file for the implementation.
 
+// REPLY: Seperated the implementation from the header file.
+
 class Mod_Expr_Command : public Bin_Expr_Command
 {
 public:
@@ -18,10 +20,7 @@ public:
   // Implements the evaluate method of Bin_Expr_Command to take the modulus of the two numbers popped off the stack and
   // then return them in order to continue the algorithm. Method is still declared virtual for further extension
   // if necessary in the future.
-  virtual int evaluate(int firstNum, int secondNum) const
-  {
-    return firstNum % secondNum;
-  }
+  virtual int evaluate(int firstNum, int secondNum) const;
 };
 
 #endif

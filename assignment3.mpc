@@ -24,6 +24,7 @@ project (assignment3) {
     Array_Iterator.h
     Expr_Command_Factory.h
     Stack_Expr_Command_Factory.h
+    Infix_Expr_Evaluator.h
   }
 
   Inline_Files {
@@ -38,6 +39,15 @@ project (assignment3) {
   Source_Files {
     driver.cpp
     Stack_Expr_Command_Factory.cpp
+    Infix_Expr_Evaluator.cpp
+    Add_Expr_Command.cpp
+    Subtract_Expr_Command.cpp
+    Multiply_Expr_Command.cpp
+    Divide_Expr_Command.cpp
+    Mod_Expr_Command.cpp
+    Bin_Expr_Command.cpp
+    Num_Expr_Command.cpp
+    Unary_Expr_Command.cpp
   }
 
   Template_Files {

@@ -10,18 +10,14 @@
 // COMMENT: Do not write implementation code in the header file. Create
 // a separate .cpp file for the implementation.
 
+// REPLY: Seperated the implementation from the header file.
+
 class Unary_Expr_Command : public Expr_Command
 {
 public:
 
   // Provides main skeleton for an algorithm that carries out a unary operation on one operand of the stack.
-  virtual void execute(Stack <int> & currentOperands)
-  {
-    int operand = currentOperands.pop();
-
-    int result = this->evaluate(operand);
-    currentOperands.push(result);
-  }
+  virtual void execute(Stack <int> & currentOperands);
 
   // Method to be implemented in subclasses of this class. Expected to carry out some operation on the number
   // and return it in order to be used in the execute() method

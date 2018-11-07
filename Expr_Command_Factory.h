@@ -16,7 +16,6 @@
 class Expr_Command_Factory
 {
 public:
-  /* @DRHILL - For some reason, putting a destructor in this class causes errors. Could you explain why this is? */
 
   // Method that creates a new Num_Expr_Command
   virtual Num_Expr_Command * create_number_command (int num) = 0;
@@ -36,14 +35,6 @@ public:
   // Method that creates a new Mod_Expr_Command
   virtual Mod_Expr_Command * create_mod_command (void) = 0;
 
-private:
-  // Blocks the use of the copy constructor
-  //Expr_Command_Factory(const Expr_Command_Factory & );
-
-  // Blocks the use of the assignment operator with this object
-  //const Expr_Command_Factory & operator = (const Expr_Command_Factory &);
 };
-
-#include "Expr_Command_Factory.inl"
 
 #endif
