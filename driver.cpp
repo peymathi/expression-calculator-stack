@@ -1,217 +1,44 @@
-#include "Add_Expr_Command.h"
-#include "Multiply_Expr_Command.h"
-#include "Divide_Expr_Command.h"
-#include "Subtract_Expr_Command.h"
-#include "Num_Expr_Command.h"
-#include "Mod_Expr_Command.h"
-#include "Array_Iterator.h"
-#include "Stack_Expr_Command_Factory.h"
-#include "Unary_Expr_Command.h"
-
-// This is the client for the expression evaluator. I was considering making a wrapper class, but I ran out of time
+#include "Infix_Expr_Evaluator.h"
 
 // COMMENT: Instead of using C functions to implement parts of the
 // calculator. It would be better suited to use a Wrapper Facade.
 
+// REPLY: Created a wrapper class named Infix_Expr_Evaluator to allow the client ease of use
 
-void infix_to_postfix(const std::string & infixString, Expr_Command_Factory & factory, Array<Expr_Command*> & postfix)
-{
-	// Stream for parsing the infix string
-	std::istringstream input(infixString);
+// COMMENT: Improve the design of your commands to reduce the design
+// complexity of this method. Right now, there are too many if-else
+// statements, and a lot of duplicate code.
 
-	// Token which will be used to make a command
-	std::string token;
+// REPLY: Response to this comment is addressed in the new wrapper class. Solution is in comment "REPLY1"
 
-	// Current indice of the postfix expression
-	size_t indice = 0;
+// COMMENT: I do not see where you are taking into account the precedence
+// of the operator during the conversion process.
 
-	// Temporary container for a command object to hold a command before it's decided where to put it
-	Expr_Command * tempCommand;
-
-	// Stack used for infix to postfix alogorithm. Holds operator commands
-	Stack<std::string> operatorTokens;
-
-	// Runs until the end of stream
-	while(!input.eof())
-	{
-    
-    // COMMENT: Improve the design of your commands to reduce the design
-    // complexity of this method. Right now, there are too many if-else
-    // statements, and a lot of duplicate code.
-
-    // COMMENT: I do not see where you are taking into account the precedence
-    // of the operator during the conversion process.
-    
-		// Assign the current input to the token string
-		input >> token;
-
-		// Create command objects based on what the token is
-		// Addition, Subtraction, Multiply, Division, Modulus Operators
-		if(token == "+" || token == "-" || token == "*" || token == "/" || token == "%")
-		{
-			operatorTokens.push(token);
-		}
-
-		// Open
-		else if(token == "(")
-		{
-			operatorTokens.push(token);
-		}
-
-		// Close. Pop's all tokens off the stack and adds them to postfix expression as operators until
-		// open is found.
-		else if(token == ")")
-		{
-			while(true)
-			{
-				token = operatorTokens.pop();
-				if(token == "(")
-				{
-					operatorTokens.pop();
-					break;
-				}
-
-				else if(token == "+")
-				{
-					tempCommand = factory.create_add_command();
-					postfix[indice] = tempCommand;
-					indice++;
-				}
-
-				else if(token == "-")
-				{
-					tempComand = factory.create_sub_command();
-					postfix[indice] = tempCommand;
-					indice++;
-				}
-
-				else if(token == "*")
-				{
-					tempCommand = factory.create_multiply_command();
-					postfix[indice] = tempCommand;
-					indice++;
-				}
-
-				else if(token == "/")
-				{
-					tempCommand = factory.create_divide_command();
-					postfix[indice] = tempCommand;
-					indice++;
-				}
-
-				else if(token == "%")
-				{
-					tempCommand = factory.create_mod_command();
-					postfix[indice] = tempCommand;
-					indice++;
-				}
-			}
-		}
-
-		// Space
-		else if(token == " ")
-		{}
-
-		// Number
-		else
-		{
-			postfix[indice] == factory.create_num_command(int(token));
-			indice++;
-		}
-
-	}
-
-	// Pop all elements off stack and make them command objects on the array of commands
-	while(!operatorTokens.is_empty())
-	{
-		token == operatorTokens.pop();
-		if(token == "+")
-		{
-			postfix[indice] = factory.create_add_command();
-			indice++;
-		}
-
-		else if(token == "-")
-		{
-			postfix[indice] = factory.create_sub_command();
-			indice++;
-		}
-
-		else if(token == "*")
-		{
-			postfix[indice] = factory.create_multiply_command();
-			indice++
-		}
-
-		else if(token == "/")
-		{
-			postfix[indice] = factory.create_divide_command();
-			indice++;
-		}
-
-		else if(token == "%")
-		{
-			postfix[indice] = factory.create_mod_command();
-			indice++;
-		}
-	}
-
-
-}
+// REPLY: Response to this comment is addressed in the new wrapper class. Solution is in comment "REPLY2"
 
 int main()
 {
 	std::string userInput;
 
-	while(userInput != "QUIT")
-	std::cout << "Enter your expression or type QUIT: ";
-	std::cin >> userInput;
-	std::cout << std::endl;
-	size_t arraySize = 0;
+	Infix_Expr_Evaluator * evaluator = new Infix_Expr_Evaluator();
 
-	std::istringstream input(userInput);
-	std::string token;
-
-	while(!input.eof())
+	while(true)
 	{
-		input >> token;
-		if(token == "+")
+		std::cout << "Enter an Infix Expression or enter QUIT to quit: ";
+		std::cin >> userInput;
+
+		if(userInput == "QUIT")
 		{
-			arraySize++;
+			break;
 		}
 
-		else if(token == "-")
-		{
-			arraySize++;
-		}
+		// Set the infix string of the evaluator object to the string inputted by the user
+		evaluator->setInfix(userInput);
 
-		else if(token == "*" || token == "/" || token == "%")
-		{
-			arraySize++;
-		}
-
-		else if(token == "(" || token == ")" || token == " ")
-		{}
-
-		else
-		{
-			arraySize++;
-		}
+		// Call the evaluateExpression method and print the result
+		std::cout << evaluator->evaluateExpression() << std::endl;
 	}
 
-	Array<Expr_Command*> * postfix = new Array<Expr_Command*>(arraySize);
-	Expr_Command_Factory factory = Expr_Command_Factory();
-	std::string infix;
+	delete Infix_Expr_Evaluator;
 
-	infix_to_postfix(infix, factory, *postfix);
-
-	Stack<int> numbers = Stack<int>();
-
-	// Evaluate Postfix expression
-	for(Array_Iterator iter(*postfix); !iter.is_done(); iter.advance())
-	{
-		(*iter)->execute(numbers);
-	}
-
-	std::cout << "Answer: " << numbers.pop() << std::endl;
 }
