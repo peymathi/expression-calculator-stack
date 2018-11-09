@@ -17,6 +17,9 @@ class Divide_Expr_Command : public Bin_Expr_Command
 {
 public:
 
+  // Constant for identifying which specific type this object is
+  const std::string TYPE = "DIVIDE";
+
   // Initializing Constructor
   Divide_Expr_Command(Stack<int> & current_operands);
 

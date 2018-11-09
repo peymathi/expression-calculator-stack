@@ -10,9 +10,14 @@
 // COMMENT: Do not write implementation code in the header file. Create
 // a separate .cpp file for the implementation.
 
+// REPLY: Seperated the implementation from the header file
+
 class Add_Expr_Command : public Bin_Expr_Command
 {
 public:
+
+  // Constant for identifying which specific type this object is
+  const std::string TYPE = "ADD";
 
   // Initializing Constructor
   Add_Expr_Command(Stack<int> & current_operands);

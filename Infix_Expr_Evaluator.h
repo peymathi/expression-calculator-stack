@@ -16,6 +16,7 @@
 #include "Array_Iterator.h"
 #include "Stack_Expr_Command_Factory.h"
 #include "Unary_Expr_Command.h"
+#include "Queue.h"
 
 class Infix_Expr_Evaluator
 {
@@ -43,8 +44,8 @@ private:
   // Infix string
   std::string infix_;
 
-  // Array of commands in postfix order to be executed
-  Array<Command*> * postfix_;
+  // Queue of commands in postfix order to be executed
+  Queue<Expr_Command*> * postfix_;
 
   // Stack of current operands
   Stack<int> * current_operands_;
@@ -55,14 +56,14 @@ private:
   /* All methods below are necessary operations for the infix expression evaluation. They cannot not
     be called by the user because the user should only call the evaluateExpression() method. */
 
-  // Converts the infix string to an Array of commands in postfix order
+  // Converts the infix string to a Queue of commands in postfix order
   void infix_to_postfix(void);
+
+  // Helper method to infix_to_postfix method. Moves commands around to keep the algorithm going
+  void move_commands(Expr_Command * currentCommand, Stack<int> & currentOperators);
 
   // Executes all commands in the postfix_ member Array
   void execute_commands(void);
-
-  // Cleans up the allocated commands stored in the postfix Array
-  void delete_commands(void);
 
 };
 

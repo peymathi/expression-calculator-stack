@@ -19,7 +19,7 @@ class Bin_Expr_Command : public Expr_Command
 public:
   // Each binary operation will follow the same general algorithm to execute the command. This method provides
   // the skeleton of the alogorithm with each subclass implementing the evaluate() method to complete the algorithm.
-  virtual void execute ();
+  virtual void execute (void);
 
   // To be implemented in subclasses with the specific evaluation of the subclasses expression operation
   virtual int evaluate (int firstNum, int secondNum) const = 0;

@@ -11,6 +11,7 @@
 class Expr_Command
 {
 public:
+  // Execution method to be implemented in all subclasses
   virtual void execute (void) = 0;
 
 protected:
