@@ -4,16 +4,12 @@
 
 #include "Num_Expr_Command.h"
 
-Num_Expr_Command::Num_Expr_Command(int next_int)
-: next_int_(next_int)
+Num_Expr_Command::Num_Expr_Command(Stack<int> & current_operands, int next_int)
+: Expr_Command(current_operands)
+  next_int_(next_int)
 {}
 
 virtual void Num_Expr_Command::execute(Stack<int> currentOperands)
 {
   currentOperands.push(this->next_int_);
-}
-
-void Num_Expr_Command::set_next_int(int nextInt)
-{
-  this->next_int_ = nextInt;
 }

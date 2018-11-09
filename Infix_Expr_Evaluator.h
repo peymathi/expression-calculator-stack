@@ -44,10 +44,10 @@ private:
   std::string infix_;
 
   // Array of commands in postfix order to be executed
-  Array<Command*> postfix_;
+  Array<Command*> * postfix_;
 
   // Stack of current operands
-  Stack<int> current_operands_;
+  Stack<int> * current_operands_;
 
   // Result of evalutating the commands
   int result_;
@@ -65,5 +65,8 @@ private:
   void delete_commands(void);
 
 };
+
+// Include inline implemenation
+#include "Infix_Expr_Evaluator.inl"
 
 #endif

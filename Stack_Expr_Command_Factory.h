@@ -8,14 +8,13 @@
 #define _STACK_EXPR_COMMAND_FACTORY_
 
 #include "Expr_Command_Factory.h"
-#include "Stack.h"
 
 class Stack_Expr_Command_Factory : public Expr_Command_Factory
 {
 public:
   // Initializing constructor. Takes in one parameter which is a reference to the current Stack
-  Stack_Expr_Command_Factory(Stack<int> & currentStack);
-  
+  Stack_Expr_Command_Factory(Stack<int> & current_operands);
+
   // Creates a new number command
   virtual Num_Expr_Command * create_number_command (int num);
 
@@ -35,8 +34,8 @@ public:
   virtual Mod_Expr_Command * create_mod_command (void);
 
 private:
-  // Reference to current stack object
-  Stack <int> & currentStack_;
+  // Reference to the stack of current operands
+  Stack<int> & current_operands_;
 
 };
 

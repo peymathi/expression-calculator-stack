@@ -11,7 +11,10 @@
 class Expr_Command
 {
 public:
-  virtual void execute (Stack <int> & currentOperands) = 0;
+  virtual void execute (void) = 0;
+
+protected:
+  Stack<int> & current_operands_;
 };
 
 #endif

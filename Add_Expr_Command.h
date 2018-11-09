@@ -14,6 +14,9 @@ class Add_Expr_Command : public Bin_Expr_Command
 {
 public:
 
+  // Initializing Constructor
+  Add_Expr_Command(Stack<int> & current_operands);
+
   // Implements the evaluate method of Bin_Expr_Command to add the two numbers popped off the stack and
   // then return them in order to continue the algorithm. Method is still declared virtual for further extension
   // if necessary in the future.

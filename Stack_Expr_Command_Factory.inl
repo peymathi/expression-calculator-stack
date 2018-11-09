@@ -8,40 +8,40 @@
 inline
 Num_Expr_Command * Stack_Expr_Command_Factory::create_number_command(int num)
 {
-  return new Num_Expr_Command(num);
+  return new Num_Expr_Command(this->current_operands_, num);
 }
 
 // create_add_command
 inline
 Add_Expr_Command * Stack_Expr_Command_Factory::create_add_command(void)
 {
-  return new Add_Expr_Command();
+  return new Add_Expr_Command(this->current_operands_);
 }
 
 // create_sub_command
 inline
 Subtract_Expr_Command * Stack_Expr_Command_Factory::create_sub_command(void)
 {
-  return new Subtract_Expr_Command();
+  return new Subtract_Expr_Command(this->current_operands_);
 }
 
 // create_multiply_command
 inline
 Multiply_Expr_Command * Stack_Expr_Command_Factory::create_multiply_command(void)
 {
-  return new Multiply_Expr_Command();
+  return new Multiply_Expr_Command(this->current_operands_);
 }
 
 // create_divide_command
 inline
 Divide_Expr_Command * Stack_Expr_Command_Factory::create_divide_command(void)
 {
-  return new Divide_Expr_Command();
+  return new Divide_Expr_Command(this->current_operands_);
 }
 
 // create_mod_command
 inline
 Mod_Expr_Command * Stack_Expr_Command_Factory::create_mod_command(void)
 {
-  return new Mod_Expr_Command();
+  return new Mod_Expr_Command(this->current_operands_);
 }

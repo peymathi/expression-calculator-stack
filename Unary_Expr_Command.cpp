@@ -4,10 +4,10 @@
 
 #include "Unary_Expr_Command.h"
 
-virtual void Unary_Expr_Command::execute(Stack <int> & currentOperands)
+virtual void Unary_Expr_Command::execute()
 {
-  int operand = currentOperands.pop();
+  int operand = this->current_operands_.pop();
 
   int result = this->evaluate(operand);
-  currentOperands.push(result);
+  current_operands_.push(result);
 }

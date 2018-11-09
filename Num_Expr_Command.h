@@ -19,16 +19,12 @@ class Num_Expr_Command : public Expr_Command
 {
 public:
   // Initializing constructor with the next operand to be pushed to the stack
-  Num_Expr_Command(int next_int)
-  : next_int_(next_int)
-  {}
+  Num_Expr_Command(Stack<int> & current_operands, int next_int);
 
   // Pushes the next integer in the expression to the stack of current operands. Declared virtual for further
   // extension if necessary
   virtual void execute(Stack <int> & currentOperands);
 
-  // Setter method for nextInt
-  void set_next_int(int next_int);
 
 private:
   // Next Integer from postfix expression

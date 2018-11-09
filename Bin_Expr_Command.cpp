@@ -4,11 +4,11 @@
 
 #include "Bin_Expr_Command.h"
 
-virtual void Bin_Expr_Command::execute (Stack <int> & currentOperands)
+virtual void Bin_Expr_Command::execute (void)
 {
-  int secondNum = currentOperands.pop();
-  int firstNum = currentOperands.pop();
+  int secondNum = this->current_operands_.pop();
+  int firstNum = this->current_operands_.pop();
 
   int result = this->evaluate(firstNum, secondNum);
-  currentOperands.push(result);
+  this->current_operands_.push(result);
 }

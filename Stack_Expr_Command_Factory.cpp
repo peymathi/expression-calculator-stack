@@ -2,7 +2,6 @@
 
 #include "Stack_Expr_Command_Factory.h"
 
-// Initializing Constructor
-Stack_Expr_Command_Factory::Stack_Expr_Command_Factory(Stack<int> & currentStack)
-: currentStack_(currentStack)
+Stack_Expr_Command_Factory::Stack_Expr_Command_Factory(Stack<int> & current_operands)
+: current_operands_(current_operands)  
 {}

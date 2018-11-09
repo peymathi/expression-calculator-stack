@@ -17,7 +17,7 @@ class Unary_Expr_Command : public Expr_Command
 public:
 
   // Provides main skeleton for an algorithm that carries out a unary operation on one operand of the stack.
-  virtual void execute(Stack <int> & currentOperands);
+  virtual void execute();
 
   // Method to be implemented in subclasses of this class. Expected to carry out some operation on the number
   // and return it in order to be used in the execute() method
