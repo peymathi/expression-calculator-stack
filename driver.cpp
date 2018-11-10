@@ -33,8 +33,6 @@ int main()
 		std::cout << "Enter an Infix Expression or enter QUIT to quit: ";
 		std::getline(std::cin, userInput);
 
-		std::cout << userInput.length() << std::endl;
-
 		// Test the input to see if the user wants to quit
 		if(userInput == "QUIT")
 		{

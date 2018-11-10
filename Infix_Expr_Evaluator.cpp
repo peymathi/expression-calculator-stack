@@ -46,10 +46,10 @@ void Infix_Expr_Evaluator::move_commands(Expr_Command * currentCommand, Stack<Ex
   // Pop, push, and enqueue various commands to where they need to go based on the infix to postfix algorithm
 
   // If the token is a "+" or a "-"
-  if(currentCommand->TYPE == "ADD" || currentCommand->TYPE == "SUB")
+  if(currentCommand->TYPE == "ADD" || currentCommand->TYPE == "SUBTRACT")
   {
     // Pop elements off the stack and enqueue until stack is empty or an open parenthesis is found
-    while(!currentOperators.is_empty() || currentOperators.top() == nullptr)
+    while(!currentOperators.is_empty() && !(currentOperators.top() == nullptr))
     {
       this->postfix_->enqueue(currentOperators.pop());
     }
@@ -59,14 +59,14 @@ void Infix_Expr_Evaluator::move_commands(Expr_Command * currentCommand, Stack<Ex
   }
 
   // If the token is "*", "/", or "%"
-  else if(currentCommand->TYPE == "MOD" || currentCommand->TYPE == "DIVIDE" || currentCommand->TYPE == "MULTIPY")
+  else if(currentCommand->TYPE == "MOD" || currentCommand->TYPE == "DIVIDE" || currentCommand->TYPE == "MULTIPLY")
   {
     // Pop elements off the stack and enqueue until stack is empty, open parenthesis is found,
     // or top is of lower precedence
     while(!currentOperators.is_empty())
     {
       if(currentOperators.top() == nullptr || currentOperators.top()->TYPE == "ADD"
-          || currentOperators.top()->TYPE == "SUB")
+          || currentOperators.top()->TYPE == "SUBTRACT")
       {
         break;
       }
@@ -82,9 +82,24 @@ void Infix_Expr_Evaluator::move_commands(Expr_Command * currentCommand, Stack<Ex
 bool Infix_Expr_Evaluator::is_int(std::string test)
 {
   // Converts the string to a c style string. Test's each char in the array if it is a digit to determine
-  // if the string is an integer
+  // if the string is an integer.
   const char * cstring = test.c_str();
 
+  // If the length is greater than one, we can test for negative numbers
+  if(test.length() > 1)
+  {
+    for(size_t i = 0; i < test.length(); i++)
+    {
+      if(!isdigit(cstring[i]) && cstring[i] != '-')
+      {
+        return false;
+      }
+
+      return true;
+    }
+  }
+
+  // If the length is not greater than one, then we do not need to test for negative numbers
   for(size_t i = 0; i < test.length(); i++)
   {
     if(!isdigit(cstring[i]))
@@ -102,11 +117,11 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
   // Create an Expr_Command_Factory
   Expr_Command_Factory * factory = new Stack_Expr_Command_Factory(*this->current_operands_);
 
-  // Stream to parse the data
-  std::istringstream stream(this->infix_);
-
   // String to hold the current parsed token
   std::string token;
+
+  // String stream to parse the data
+  std::istringstream stream(this->infix_);
 
   // Temporary pointer to hold newly created commands
   Expr_Command * currentCommand = nullptr;
@@ -117,15 +132,13 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
   // Iterate through the entire string to parse it
   while(!stream.eof())
   {
-    std::cout << "This ran" << std::endl;
-    // This is where the bug is. It is not parsing.
-    std::getline(stream, token);
-    std::cout << token << std::endl;
+    stream >> token;
 
     // Test the token for each type to create a specific command and decide what to do with that command
     // If the token is a number, create a number command and enqueue it on the Queue of commands
     if(this->is_int(token))
     {
+      // Converts the string token to an integer to make the number command
       currentCommand = factory->create_number_command(std::stoi(token));
       this->postfix_->enqueue(currentCommand);
     }
@@ -181,8 +194,11 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
       // Pops elements off the stack and enqueues them to postfix_ until open parenthesis is found
       while(!(currentOperators->top() == nullptr))
       {
-         this->postfix_->enqueue(currentOperators->pop());
+        this->postfix_->enqueue(currentOperators->pop());
       }
+
+      // Pops off the open parenthesis
+      currentOperators->pop();
     }
 
     // Invalid Token. Throw invalid token exception
@@ -190,6 +206,12 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
     {
       throw invalid_token();
     }
+  }
+
+  // End of infix expression. Pop all operators off the stack an enquee to postfix
+  while(!currentOperators->is_empty())
+  {
+    this->postfix_->enqueue(currentOperators->pop());
   }
 
   delete currentOperators;
