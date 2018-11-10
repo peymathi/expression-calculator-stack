@@ -17,6 +17,9 @@ class Expr_Command_Factory
 {
 public:
 
+  // Destructor
+  virtual ~Expr_Command_Factory(void) = 0;
+
   // Method that creates a new Num_Expr_Command
   virtual Num_Expr_Command * create_number_command (int num) = 0;
 

@@ -12,10 +12,10 @@ Infix_Expr_Evaluator::Infix_Expr_Evaluator(void)
   result_()
 {}
 
-// Inititializing constructor
+// Inititializing constructor. Initializes the Queue to be the size of the array
 Infix_Expr_Evaluator::Infix_Expr_Evaluator(std::string infix)
 : infix_(infix),
-  postfix_(new Queue<Expr_Command*>()),
+  postfix_(new Queue<Expr_Command*>(infix.length())),
   current_operands_(new Stack<int>()),
   result_()
 {}
@@ -66,7 +66,7 @@ void Infix_Expr_Evaluator::move_commands(Expr_Command * currentCommand, Stack<Ex
     while(!currentOperators.is_empty())
     {
       if(currentOperators.top() == nullptr || currentOperators.top()->TYPE == "ADD"
-          || this->current_operands->top()->TYPE == "SUB")
+          || currentOperators.top()->TYPE == "SUB")
       {
         break;
       }
@@ -78,17 +78,32 @@ void Infix_Expr_Evaluator::move_commands(Expr_Command * currentCommand, Stack<Ex
   }
 }
 
+// Integer Test
+bool Infix_Expr_Evaluator::is_int(std::string test)
+{
+  // Converts the string to a c style string. Test's each char in the array if it is a digit to determine
+  // if the string is an integer
+  const char * cstring = test.c_str();
+
+  for(size_t i = 0; i < test.length(); i++)
+  {
+    if(!isdigit(cstring[i]))
+    {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 // Infix To Postfix Conversion
 void Infix_Expr_Evaluator::infix_to_postfix(void)
 {
   // Create an Expr_Command_Factory
   Expr_Command_Factory * factory = new Stack_Expr_Command_Factory(*this->current_operands_);
 
-  // Stream for parsing the infix string
+  // Stream to parse the data
   std::istringstream stream(this->infix_);
-
-  // Tells the stream to ignore whitespace
-  stream.ignore(strlen(this->infix_), " ");
 
   // String to hold the current parsed token
   std::string token;
@@ -102,14 +117,16 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
   // Iterate through the entire string to parse it
   while(!stream.eof())
   {
-    // Get the current token
-    stream >> token;
+    std::cout << "This ran" << std::endl;
+    // This is where the bug is. It is not parsing.
+    std::getline(stream, token);
+    std::cout << token << std::endl;
 
     // Test the token for each type to create a specific command and decide what to do with that command
     // If the token is a number, create a number command and enqueue it on the Queue of commands
-    if(isdigit(token))
+    if(this->is_int(token))
     {
-      currentCommand = factory->create_number_command((int) token);
+      currentCommand = factory->create_number_command(std::stoi(token));
       this->postfix_->enqueue(currentCommand);
     }
 
@@ -117,35 +134,35 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
     else if(token == "+")
     {
       currentCommand = factory->create_add_command();
-      this->move_commands(*currentCommand, *currentOperators);
+      this->move_commands(currentCommand, *currentOperators);
     }
 
     // Create subtraction command and push to stack of commands
     else if(token == "-")
     {
       currentCommand = factory->create_sub_command();
-      this->move_commands(*currentCommand, *currentOperators);
+      this->move_commands(currentCommand, *currentOperators);
     }
 
     // Create division command and push to stack of commands
     else if(token == "/")
     {
       currentCommand = factory->create_divide_command();
-      this->move_commands(*currentCommand, *currentOperators);
+      this->move_commands(currentCommand, *currentOperators);
     }
 
     // Create multiplication command and push to stack of commands
     else if(token == "*")
     {
       currentCommand = factory->create_multiply_command();
-      this->move_commands(*currentCommand, *currentOperators);
+      this->move_commands(currentCommand, *currentOperators);
     }
 
     // Create modulus command and push to stack of commands
     else if(token == "%")
     {
       currentCommand = factory->create_mod_command();
-      this->move_commands(*currentCommand, *currentOperators);
+      this->move_commands(currentCommand, *currentOperators);
     }
 
     // Create Open Parenthesis Command Object and push to stack of commands
@@ -162,7 +179,7 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
     else if(token == ")")
     {
       // Pops elements off the stack and enqueues them to postfix_ until open parenthesis is found
-      while(!currentOperators->top() == nullptr)
+      while(!(currentOperators->top() == nullptr))
       {
          this->postfix_->enqueue(currentOperators->pop());
       }
@@ -189,7 +206,7 @@ void Infix_Expr_Evaluator::execute_commands(void)
   while(!this->postfix_->is_empty())
   {
     // Set the temporary command pointer to point to the next command
-    currentCommand = this->postfix->dequeue();
+    currentCommand = this->postfix_->dequeue();
 
     // Execute the command
     currentCommand->execute();

@@ -124,9 +124,6 @@ void Queue<T>::resize(size_t new_size)
     {
       this->size_ = new_size;
     }
-
-    std::cout << this->size_ << std::endl;
-    std::cout << this->max_size_ << std::endl;
   }
 
   catch(std::bad_alloc ex)

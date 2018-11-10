@@ -1,4 +1,7 @@
 #include "Infix_Expr_Evaluator.h"
+#include "Stack.h"
+#include "Subtract_Expr_Command.h"
+#include "Add_Expr_Command.h"
 
 // COMMENT: Instead of using C functions to implement parts of the
 // calculator. It would be better suited to use a Wrapper Facade.
@@ -9,24 +12,30 @@
 // complexity of this method. Right now, there are too many if-else
 // statements, and a lot of duplicate code.
 
-// REPLY: Response to this comment is addressed in the new wrapper class. Solution is in comment "REPLY1"
+// REPLY: Improved the design. Removed redundant code. See Infix_Expr_Evaluator class for this change
 
 // COMMENT: I do not see where you are taking into account the precedence
 // of the operator during the conversion process.
 
-// REPLY: Response to this comment is addressed in the new wrapper class. Solution is in comment "REPLY2"
+// REPLY: Took operator precedence into account within the move_commands() method in Infix_Expr_Evaluator class
 
 int main()
 {
+	// String to hold userInput
 	std::string userInput;
 
+	// Wrapper object to evaluate expression
 	Infix_Expr_Evaluator * evaluator = new Infix_Expr_Evaluator();
 
 	while(true)
 	{
+		// Tell the user how the program works and get their input
 		std::cout << "Enter an Infix Expression or enter QUIT to quit: ";
-		std::cin >> userInput;
+		std::getline(std::cin, userInput);
 
+		std::cout << userInput.length() << std::endl;
+
+		// Test the input to see if the user wants to quit
 		if(userInput == "QUIT")
 		{
 			break;
@@ -40,5 +49,7 @@ int main()
 	}
 
 	delete evaluator;
+
+	return 0;
 
 }

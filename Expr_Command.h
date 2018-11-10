@@ -11,8 +11,17 @@
 class Expr_Command
 {
 public:
+  // Constructor used to initialize member variables
+  Expr_Command(const std::string type, Stack<int> & current_operands);
+
+  // Destructor
+  virtual ~Expr_Command(void) = 0;
+
   // Execution method to be implemented in all subclasses
   virtual void execute (void) = 0;
+
+  // Type identifier for what type of command this is
+  const std::string TYPE;
 
 protected:
   Stack<int> & current_operands_;

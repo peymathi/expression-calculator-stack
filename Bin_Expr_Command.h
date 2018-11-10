@@ -17,6 +17,13 @@
 class Bin_Expr_Command : public Expr_Command
 {
 public:
+
+  // Constructor
+  Bin_Expr_Command(const std::string type, Stack<int> & current_operands);
+
+  // Destructor
+  ~Bin_Expr_Command(void);
+
   // Each binary operation will follow the same general algorithm to execute the command. This method provides
   // the skeleton of the alogorithm with each subclass implementing the evaluate() method to complete the algorithm.
   virtual void execute (void);

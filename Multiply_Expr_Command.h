@@ -17,9 +17,6 @@ class Multiply_Expr_Command : public Bin_Expr_Command
 {
 public:
 
-  // Constant for identifying which type this object is
-  const std::string TYPE = "MULTIPLY";
-
   // Initializing constructor
   Multiply_Expr_Command(Stack<int> & current_operands);
 

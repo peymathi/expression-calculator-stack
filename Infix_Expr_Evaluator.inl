@@ -12,4 +12,5 @@ inline
 void Infix_Expr_Evaluator::setInfix(std::string infix)
 {
   this->infix_ = infix;
+  this->postfix_->resize(infix.length());
 }

@@ -51,6 +51,8 @@ project (assignment3) {
     Bin_Expr_Command.cpp
     Num_Expr_Command.cpp
     Unary_Expr_Command.cpp
+    Expr_Command_Factory.cpp
+    Expr_Command.cpp
   }
 
   Template_Files {

@@ -16,8 +16,14 @@ class Unary_Expr_Command : public Expr_Command
 {
 public:
 
+  // Constructor to initialize base class members
+  Unary_Expr_Command(const std::string type, Stack<int> & current_operands);
+
+  // Destructor
+  ~Unary_Expr_Command(void);
+
   // Provides main skeleton for an algorithm that carries out a unary operation on one operand of the stack.
-  virtual void execute();
+  virtual void execute(void);
 
   // Method to be implemented in subclasses of this class. Expected to carry out some operation on the number
   // and return it in order to be used in the execute() method

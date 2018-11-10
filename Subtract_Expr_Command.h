@@ -17,9 +17,6 @@ class Subtract_Expr_Command : public Bin_Expr_Command
 {
 public:
 
-  // Constant for identifying which type this object is
-  const std::string TYPE = "SUBTRACT";
-
   // Initializing constructor
   Subtract_Expr_Command(Stack<int> & current_operands);
 

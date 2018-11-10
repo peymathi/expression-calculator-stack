@@ -17,6 +17,9 @@
 #include "Stack_Expr_Command_Factory.h"
 #include "Unary_Expr_Command.h"
 #include "Queue.h"
+#include <string.h>
+#include <sstream>
+#include <stdlib.h>
 
 class Infix_Expr_Evaluator
 {
@@ -72,6 +75,9 @@ private:
 
   // Helper method to infix_to_postfix method. Moves commands around to keep the algorithm going
   void move_commands(Expr_Command * currentCommand, Stack<Expr_Command*> & currentOperators);
+
+  // Helper method to infix_to_postfix method. Tests a string to see if it is an integer
+  bool is_int(std::string test);
 
   // Executes all commands in the postfix_ member Array
   void execute_commands(void);

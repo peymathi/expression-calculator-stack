@@ -5,11 +5,11 @@
 #include "Num_Expr_Command.h"
 
 Num_Expr_Command::Num_Expr_Command(Stack<int> & current_operands, int next_int)
-: Expr_Command(current_operands)
+: Expr_Command("NUM", current_operands),
   next_int_(next_int)
 {}
 
-virtual void Num_Expr_Command::execute()
+void Num_Expr_Command::execute()
 {
-  currentOperands.push(this->next_int_);
+  this->current_operands_.push(this->next_int_);
 }

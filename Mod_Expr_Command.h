@@ -28,9 +28,6 @@ public:
 
   };
 
-  // Constant for identifying which specific type this object is
-  const std::string TYPE = "MOD";
-
   // Initializing Constructor
   Mod_Expr_Command(Stack<int> & current_operands);
 

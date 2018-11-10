@@ -4,11 +4,12 @@
 
 #include "Subtract_Expr_Command.h"
 
+// Constructor initializes the base class member variables
 Subtract_Expr_Command::Subtract_Expr_Command(Stack<int> & current_operands)
-: Expr_Command(current_operands)
+: Bin_Expr_Command("SUBTRACT", current_operands)
 {}
 
-virtual int Subtract_Expr_Command::evaluate(int firstNum, int secondNum) const
+int Subtract_Expr_Command::evaluate(int firstNum, int secondNum) const
 {
   return firstNum - secondNum;
 }
