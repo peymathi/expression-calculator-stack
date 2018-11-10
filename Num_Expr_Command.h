@@ -23,7 +23,7 @@ public:
 
   // Pushes the next integer in the expression to the stack of current operands. Declared virtual for further
   // extension if necessary
-  virtual void execute(Stack <int> & currentOperands);
+  virtual void execute();
 
 
 private:

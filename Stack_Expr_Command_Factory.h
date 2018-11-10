@@ -15,6 +15,9 @@ public:
   // Initializing constructor. Takes in one parameter which is a reference to the current Stack
   Stack_Expr_Command_Factory(Stack<int> & current_operands);
 
+  // Destructor
+  ~Stack_Expr_Command_Factory();
+
   // Creates a new number command
   virtual Num_Expr_Command * create_number_command (int num);
 

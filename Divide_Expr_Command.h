@@ -16,6 +16,16 @@
 class Divide_Expr_Command : public Bin_Expr_Command
 {
 public:
+  // Exception to be thrown if dividing by zero is attempted
+  class divide_by_zero : public std::exception
+  {
+  public:
+    // Default Constructor
+    divide_by_zero()
+    : std::exception()
+    {}
+
+  };
 
   // Constant for identifying which specific type this object is
   const std::string TYPE = "DIVIDE";

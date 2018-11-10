@@ -3,5 +3,8 @@
 #include "Stack_Expr_Command_Factory.h"
 
 Stack_Expr_Command_Factory::Stack_Expr_Command_Factory(Stack<int> & current_operands)
-: current_operands_(current_operands)  
+: current_operands_(current_operands)
+{}
+
+Stack_Expr_Command_Factory::~Stack_Expr_Command_Factory()
 {}

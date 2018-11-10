@@ -9,7 +9,7 @@ Num_Expr_Command::Num_Expr_Command(Stack<int> & current_operands, int next_int)
   next_int_(next_int)
 {}
 
-virtual void Num_Expr_Command::execute(Stack<int> currentOperands)
+virtual void Num_Expr_Command::execute()
 {
   currentOperands.push(this->next_int_);
 }

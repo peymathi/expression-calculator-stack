@@ -37,7 +37,7 @@ int Infix_Expr_Evaluator::evaluateExpression(void)
   this->execute_commands();
 
   this->result_ = this->current_operands_->top();
-  return this->current_operaands_->pop();
+  return this->current_operands_->pop();
 }
 
 // Move Commands
@@ -46,35 +46,35 @@ void Infix_Expr_Evaluator::move_commands(Expr_Command * currentCommand, Stack<Ex
   // Pop, push, and enqueue various commands to where they need to go based on the infix to postfix algorithm
 
   // If the token is a "+" or a "-"
-  if(currentCommand->type == "ADD" || currentCommand->type == "SUB")
+  if(currentCommand->TYPE == "ADD" || currentCommand->TYPE == "SUB")
   {
     // Pop elements off the stack and enqueue until stack is empty or an open parenthesis is found
-    while(!currentOperators->is_empty() || currentOperators->top() == nullptr)
+    while(!currentOperators.is_empty() || currentOperators.top() == nullptr)
     {
-      this->postfix_->enqueue(currentOperators->pop());
+      this->postfix_->enqueue(currentOperators.pop());
     }
 
     // Push this command onto the stack
-    currentOperators->push(currentCommand);
+    currentOperators.push(currentCommand);
   }
 
   // If the token is "*", "/", or "%"
-  else if(currentCommand->type == "MOD" || currentCommand->type == "DIVIDE" || currentCommand->type == "MULTIPY")
+  else if(currentCommand->TYPE == "MOD" || currentCommand->TYPE == "DIVIDE" || currentCommand->TYPE == "MULTIPY")
   {
     // Pop elements off the stack and enqueue until stack is empty, open parenthesis is found,
     // or top is of lower precedence
-    while(!currentOperators->is_empty())
+    while(!currentOperators.is_empty())
     {
-      if(currentOperators->top() == nullptr || currentOperators->top()->type == "ADD"
-          || this->current_operands->top()->type == "SUB")
+      if(currentOperators.top() == nullptr || currentOperators.top()->TYPE == "ADD"
+          || this->current_operands->top()->TYPE == "SUB")
       {
         break;
       }
 
-      this->postfix_->enqueue(currentOperators->pop());
+      this->postfix_->enqueue(currentOperators.pop());
     }
 
-    currentOperators->push(currentCommand);
+    currentOperators.push(currentCommand);
   }
 }
 
@@ -82,7 +82,7 @@ void Infix_Expr_Evaluator::move_commands(Expr_Command * currentCommand, Stack<Ex
 void Infix_Expr_Evaluator::infix_to_postfix(void)
 {
   // Create an Expr_Command_Factory
-  Expr_Command_Factory factory = Stack_Expr_Command_Factory();
+  Expr_Command_Factory * factory = new Stack_Expr_Command_Factory(*this->current_operands_);
 
   // Stream for parsing the infix string
   std::istringstream stream(this->infix_);
@@ -117,35 +117,35 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
     else if(token == "+")
     {
       currentCommand = factory->create_add_command();
-      this->move_commands(currentCommand);
+      this->move_commands(*currentCommand, *currentOperators);
     }
 
     // Create subtraction command and push to stack of commands
     else if(token == "-")
     {
       currentCommand = factory->create_sub_command();
-      this->move_commands(currentCommand);
+      this->move_commands(*currentCommand, *currentOperators);
     }
 
     // Create division command and push to stack of commands
     else if(token == "/")
     {
       currentCommand = factory->create_divide_command();
-      this->move_commands(currentCommand);
+      this->move_commands(*currentCommand, *currentOperators);
     }
 
     // Create multiplication command and push to stack of commands
     else if(token == "*")
     {
       currentCommand = factory->create_multiply_command();
-      this->move_commands(currentCommand);
+      this->move_commands(*currentCommand, *currentOperators);
     }
 
     // Create modulus command and push to stack of commands
     else if(token == "%")
     {
       currentCommand = factory->create_mod_command();
-      this->move_commands(currentCommand);
+      this->move_commands(*currentCommand, *currentOperators);
     }
 
     // Create Open Parenthesis Command Object and push to stack of commands
@@ -171,11 +171,12 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
     // Invalid Token. Throw invalid token exception
     else
     {
-
+      throw invalid_token();
     }
   }
 
   delete currentOperators;
+  delete factory;
 }
 
 // Execute Commands

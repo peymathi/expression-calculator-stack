@@ -17,6 +17,17 @@ class Mod_Expr_Command : public Bin_Expr_Command
 {
 public:
 
+  // Exception to be thrown if execution requires taking the modulus of a number by zero
+  class mod_by_zero : public std::exception
+  {
+  public:
+    // Default Constructor
+    mod_by_zero(void)
+    : std::exception()
+    {}
+
+  };
+
   // Constant for identifying which specific type this object is
   const std::string TYPE = "MOD";
 

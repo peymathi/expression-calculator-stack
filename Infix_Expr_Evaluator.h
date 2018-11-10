@@ -21,6 +21,17 @@
 class Infix_Expr_Evaluator
 {
 public:
+
+  // Exception to be thrown for an invalid token
+  class invalid_token : public std::exception
+  {
+  public:
+    // Default Constructor
+    invalid_token(void)
+    : std::exception() {}
+
+  };
+
   // Default constructor
   Infix_Expr_Evaluator(void);
 
@@ -60,7 +71,7 @@ private:
   void infix_to_postfix(void);
 
   // Helper method to infix_to_postfix method. Moves commands around to keep the algorithm going
-  void move_commands(Expr_Command * currentCommand, Stack<int> & currentOperators);
+  void move_commands(Expr_Command * currentCommand, Stack<Expr_Command*> & currentOperators);
 
   // Executes all commands in the postfix_ member Array
   void execute_commands(void);

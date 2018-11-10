@@ -39,6 +39,6 @@ int main()
 		std::cout << evaluator->evaluateExpression() << std::endl;
 	}
 
-	delete Infix_Expr_Evaluator;
+	delete evaluator;
 
 }

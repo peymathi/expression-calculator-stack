@@ -25,6 +25,7 @@ project (assignment3) {
     Expr_Command_Factory.h
     Stack_Expr_Command_Factory.h
     Infix_Expr_Evaluator.h
+    Queue.h
   }
 
   Inline_Files {
@@ -35,6 +36,7 @@ project (assignment3) {
     Array_Iterator.inl
     Stack_Expr_Command_Factory.inl
     Infix_Expr_Evaluator.inl
+    Queue.inl
   }
 
   Source_Files {
@@ -57,5 +59,6 @@ project (assignment3) {
     Array.cpp
     Array_Base.cpp
     Array_Iterator.cpp
+    Queue.cpp
   }
 }
