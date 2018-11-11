@@ -1,8 +1,13 @@
 /* I pledge that I have neither given nor received any help on this assignment */
 
-// This class is a wrapper class for all the components of the Infix Expression Evaluator. This class
-// allows the client to easily use all of the components of the expression evaluator by using only this class.
-// Goal for this class is to allow the client to create this object, and then call one method to get the result
+/* This class is a wrapper class for all the components of the Infix Expression Evaluator. This class
+ allows the client to easily use all of the components of the expression evaluator by using only this class.
+
+ This class converts the given infix string into a queue of Expr_Commands using a Stack_Expr_Command_Factory,
+ then it executes all the commands in the queue and returns the result. This class also stores that result as
+ in state to save for later use.
+*/
+
 
 #ifndef _INFIX_EXPR_EVALUATOR_
 #define _INFIX_EXPR_EVALUATOR_
@@ -31,6 +36,16 @@ public:
   public:
     // Default Constructor
     invalid_token(void)
+    : std::exception() {}
+
+  };
+
+  // Exception to be thrown for a logic error in the expression (example: an open parenthesis without a close parenthesis)
+  class logic_exception : public std::exception
+  {
+  public:
+    // Default Constructor
+    logic_exception(void)
     : std::exception() {}
 
   };

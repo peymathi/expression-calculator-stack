@@ -1,7 +1,4 @@
 #include "Infix_Expr_Evaluator.h"
-#include "Stack.h"
-#include "Subtract_Expr_Command.h"
-#include "Add_Expr_Command.h"
 
 // COMMENT: Instead of using C functions to implement parts of the
 // calculator. It would be better suited to use a Wrapper Facade.
@@ -42,8 +39,42 @@ int main()
 		// Set the infix string of the evaluator object to the string inputted by the user
 		evaluator->setInfix(userInput);
 
-		// Call the evaluateExpression method and print the result
-		std::cout << evaluator->evaluateExpression() << std::endl;
+		// Try-Catch block to catch all exceptions that could arise from evaluating the expression
+		try
+		{
+			// Call the evaluateExpression method and print the result
+			std::cout << evaluator->evaluateExpression() << std::endl;
+		}
+
+		// Catch the invalid_token exception. Explain to the user the error with their expression and continue
+		catch(Infix_Expr_Evaluator::invalid_token ex)
+		{
+			std::cout << "Invalid Token in the entered expression. Please try again." << std::endl;
+		}
+
+		// Catch the logic_exception exception. Explain to the user the error with their expression and continue
+		catch(Infix_Expr_Evaluator::logic_exception ex)
+		{
+			std::cout << "Logic error in the entered expression. Please try again." << std::endl;
+		}
+
+		// Catch divide by zero exception. Explain to the user the error with their expression and continue
+		catch(Divide_Expr_Command::divide_by_zero ex)
+		{
+			std::cout << "Logic Error: Expression attempts to divide by zero. Please try again." << std::endl;
+		}
+
+		// Catch mod by zero exception. Explain to the user the error with their expression and continue
+		catch(Mod_Expr_Command::mod_by_zero ex)
+		{
+			std::cout << "Logic Error: Expression attempt to take a modulus by zero. Please try again." << std::endl;
+		}
+
+		// Catch any other exceptions
+		catch(...)
+		{
+			std::cout << "Unknown error. Please try again" << std::endl;
+		}
 	}
 
 	delete evaluator;

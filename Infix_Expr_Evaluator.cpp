@@ -36,8 +36,21 @@ int Infix_Expr_Evaluator::evaluateExpression(void)
   // Call the execute_commands method
   this->execute_commands();
 
-  this->result_ = this->current_operands_->top();
-  return this->current_operands_->pop();
+  this->result_ = this->current_operands_->pop();
+
+  // If the stack of current_operands_ is not empty at this point, then this means there was a logic error.
+  if(!this->current_operands_->is_empty())
+  {
+    // Pop the rest of the elements off to allow further use of this object
+    while(!this->current_operands_->is_empty())
+    {
+      this->current_operands_->pop();
+    }
+
+    // Throw a logic error
+    throw logic_exception();
+  }
+  return this->result_;
 }
 
 // Move Commands
@@ -49,7 +62,7 @@ void Infix_Expr_Evaluator::move_commands(Expr_Command * currentCommand, Stack<Ex
   if(currentCommand->TYPE == "ADD" || currentCommand->TYPE == "SUBTRACT")
   {
     // Pop elements off the stack and enqueue until stack is empty or an open parenthesis is found
-    while(!currentOperators.is_empty() && !(currentOperators.top() == nullptr))
+    while(!currentOperators.is_empty() && currentOperators.top() != nullptr)
     {
       this->postfix_->enqueue(currentOperators.pop());
     }
@@ -81,34 +94,37 @@ void Infix_Expr_Evaluator::move_commands(Expr_Command * currentCommand, Stack<Ex
 // Integer Test
 bool Infix_Expr_Evaluator::is_int(std::string test)
 {
-  // Converts the string to a c style string. Test's each char in the array if it is a digit to determine
-  // if the string is an integer.
+  // Converts the string to a c style string for digit testing
   const char * cstring = test.c_str();
 
-  // If the length is greater than one, we can test for negative numbers
-  if(test.length() > 1)
+  // All tokens inputted in the expression will run through this test for integer. Therefore, this algorithm
+  // must consider all cases.
+
+  // This if statement weeds out any tokens that do not start out with a digit or the '-' character
+  if(isdigit(cstring[0]) || cstring[0] == '-')
   {
-    for(size_t i = 0; i < test.length(); i++)
+    // Test the rest of the string for integers only
+    for(size_t i = 1; i < test.length(); i++)
     {
-      if(!isdigit(cstring[i]) && cstring[i] != '-')
+      // If the element at i is not a digit, return false
+      if(!isdigit(cstring[i]))
       {
         return false;
       }
-
-      return true;
     }
-  }
 
-  // If the length is not greater than one, then we do not need to test for negative numbers
-  for(size_t i = 0; i < test.length(); i++)
-  {
-    if(!isdigit(cstring[i]))
+    // If the token is a single character that is '-', then this is the subraction token not an integer
+    if(test.length() == 1 && cstring[0] == '-')
     {
       return false;
     }
+
+    // Runs only when the cstring is all integers, or a '-' character followed by only integers
+    return true;
   }
 
-  return true;
+  // All tokens that do not start as an integer or a '-' character will run this by failing the first if statement
+  return false;
 }
 
 // Infix To Postfix Conversion
@@ -147,6 +163,8 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
     else if(token == "+")
     {
       currentCommand = factory->create_add_command();
+
+      // Checks for operator precedence and moves commands as needed0
       this->move_commands(currentCommand, *currentOperators);
     }
 
@@ -154,6 +172,8 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
     else if(token == "-")
     {
       currentCommand = factory->create_sub_command();
+
+      // Checks for operator precedence and moves commands as needed
       this->move_commands(currentCommand, *currentOperators);
     }
 
@@ -161,6 +181,8 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
     else if(token == "/")
     {
       currentCommand = factory->create_divide_command();
+
+      // Checks for operator precedence and moves commands as needed
       this->move_commands(currentCommand, *currentOperators);
     }
 
@@ -168,6 +190,8 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
     else if(token == "*")
     {
       currentCommand = factory->create_multiply_command();
+
+      // Checks for operator precedence and moves commands as needed
       this->move_commands(currentCommand, *currentOperators);
     }
 
@@ -192,26 +216,81 @@ void Infix_Expr_Evaluator::infix_to_postfix(void)
     else if(token == ")")
     {
       // Pops elements off the stack and enqueues them to postfix_ until open parenthesis is found
-      while(!(currentOperators->top() == nullptr))
+      while(!currentOperators->is_empty())
       {
-        this->postfix_->enqueue(currentOperators->pop());
-      }
+        // If the top does not equal nullptr, pop element and enqueue to postfix
+        if(currentOperators->top() != nullptr)
+        {
+          this->postfix_->enqueue(currentOperators->pop());
 
-      // Pops off the open parenthesis
-      currentOperators->pop();
+          // If after popping this element the stack is empty, then nullptr was never found and therefore there was
+          // never an open parenthesis. Throw logic exception
+          if(currentOperators->is_empty())
+          {
+            // Clean up currently allocated objects to avoid memory leak before throwing exception
+            while(!this->postfix_->is_empty())
+            {
+              delete this->postfix_->dequeue();
+            }
+
+            delete currentOperators;
+            delete factory;
+
+            throw logic_exception();
+          }
+        }
+
+        // If the top does equal nullptr, pop it from stack and break from while loop
+        else
+        {
+          currentOperators->pop();
+          break;
+        }
+      }
     }
 
     // Invalid Token. Throw invalid token exception
     else
     {
+      // Clean up currently allocated objects to avoid memory leak before throwing exception
+      while(!this->postfix_->is_empty())
+      {
+        delete this->postfix_->dequeue();
+      }
+
+      delete currentOperators;
+      delete factory;
+
       throw invalid_token();
     }
   }
 
-  // End of infix expression. Pop all operators off the stack an enquee to postfix
+  // End of infix expression. Pop all operators off the stack an enqueue to postfix
   while(!currentOperators->is_empty())
   {
-    this->postfix_->enqueue(currentOperators->pop());
+    // Test to see if an open parenthesis was left without a close parenthesis
+    currentCommand = currentOperators->pop();
+
+    // If currentCommand does not equal nullptr, then this is a valid command object. Enqueue to postfix
+    if(currentCommand != nullptr)
+    {
+      this->postfix_->enqueue(currentCommand);
+    }
+
+    // If currentCommmand does equal nullptr, an open parenthesis was not closed, throw logic_exception
+    else
+    {
+      // Clean up currently allocated objects to avoid memory leak before throwing exception
+      while(!this->postfix_->is_empty())
+      {
+        delete this->postfix_->dequeue();
+      }
+
+      delete currentOperators;
+      delete factory;
+
+      throw logic_exception();
+    }
   }
 
   delete currentOperators;
@@ -230,8 +309,54 @@ void Infix_Expr_Evaluator::execute_commands(void)
     // Set the temporary command pointer to point to the next command
     currentCommand = this->postfix_->dequeue();
 
-    // Execute the command
-    currentCommand->execute();
+    // Catch exceptions that may arrise from executing
+    try
+    {
+      // Execute the command
+      currentCommand->execute();
+    }
+
+    catch(Divide_Expr_Command::divide_by_zero ex)
+    {
+      // Delete current objects in command queue
+      while(!this->postfix_->is_empty())
+      {
+        delete this->postfix_->dequeue();
+      }
+
+      delete currentCommand;
+
+      // Allow the user to catch this. Only caught here to stop memory leak
+      throw Divide_Expr_Command::divide_by_zero();
+    }
+
+    catch(Mod_Expr_Command::mod_by_zero ex)
+    {
+      // Delete current objects in command queue
+      while(!this->postfix_->is_empty())
+      {
+        delete this->postfix_->dequeue();
+      }
+
+      delete currentCommand;
+
+      // Allow the user to catch this. Only caught here to stop memory leak
+      throw Mod_Expr_Command::mod_by_zero();
+    }
+
+    catch(...)
+    {
+      // Delete current objects in command queue
+      while(!this->postfix_->is_empty())
+      {
+        delete this->postfix_->dequeue();
+      }
+
+      delete currentCommand;
+
+      // Allow the user to catch this. Only caught here to stop memory leak
+      throw logic_exception();
+    }
 
     // Delete the command object
     delete currentCommand;
