@@ -1,0 +1,13 @@
+Enter an Infix Expression or enter QUIT to quit: 2
+Enter an Infix Expression or enter QUIT to quit: -4
+Enter an Infix Expression or enter QUIT to quit: 15
+Enter an Infix Expression or enter QUIT to quit: 0
+Enter an Infix Expression or enter QUIT to quit: 0
+Enter an Infix Expression or enter QUIT to quit: -121
+Enter an Infix Expression or enter QUIT to quit: 8
+Enter an Infix Expression or enter QUIT to quit: -71
+Enter an Infix Expression or enter QUIT to quit: -3116
+Enter an Infix Expression or enter QUIT to quit: Logic error in the entered expression. Please try again.
+Enter an Infix Expression or enter QUIT to quit: Logic error in the entered expression. Please try again.
+Enter an Infix Expression or enter QUIT to quit: Logic Error: Expression attempts to divide by zero. Please try again.
+Enter an Infix Expression or enter QUIT to quit: 
