@@ -1,0 +1,21 @@
+Generating 'make' output using default input
+Generation Time: 0s
+make[1]: Entering directory `/home/hilljh/cs363-sandbox/assignment3/peymathi/cs363-fall2018-assignment3'
+rm -rf driver.o Stack_Expr_Command_Factory.o Infix_Expr_Evaluator.o Add_Expr_Command.o Subtract_Expr_Command.o Multiply_Expr_Command.o Divide_Expr_Command.o Mod_Expr_Command.o Bin_Expr_Command.o Num_Expr_Command.o Unary_Expr_Command.o Expr_Command_Factory.o Expr_Command.o
+make[1]: Leaving directory `/home/hilljh/cs363-sandbox/assignment3/peymathi/cs363-fall2018-assignment3'
+make[1]: Entering directory `/home/hilljh/cs363-sandbox/assignment3/peymathi/cs363-fall2018-assignment3'
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "driver.o" driver.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Stack_Expr_Command_Factory.o" Stack_Expr_Command_Factory.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Infix_Expr_Evaluator.o" Infix_Expr_Evaluator.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Add_Expr_Command.o" Add_Expr_Command.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Subtract_Expr_Command.o" Subtract_Expr_Command.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Multiply_Expr_Command.o" Multiply_Expr_Command.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Divide_Expr_Command.o" Divide_Expr_Command.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Mod_Expr_Command.o" Mod_Expr_Command.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Bin_Expr_Command.o" Bin_Expr_Command.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Num_Expr_Command.o" Num_Expr_Command.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Unary_Expr_Command.o" Unary_Expr_Command.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Expr_Command_Factory.o" Expr_Command_Factory.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -c  -o "Expr_Command.o" Expr_Command.cpp
+g++  -fPIC -O -std=c++11 -D_REENTRANT -L"." driver.o Stack_Expr_Command_Factory.o Infix_Expr_Evaluator.o Add_Expr_Command.o Subtract_Expr_Command.o Multiply_Expr_Command.o Divide_Expr_Command.o Mod_Expr_Command.o Bin_Expr_Command.o Num_Expr_Command.o Unary_Expr_Command.o Expr_Command_Factory.o Expr_Command.o -ldl -lrt -lpthread -o "assignment3"
+make[1]: Leaving directory `/home/hilljh/cs363-sandbox/assignment3/peymathi/cs363-fall2018-assignment3'
