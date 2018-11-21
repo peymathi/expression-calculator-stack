@@ -1,4 +1,4 @@
-/* I pledge that I have neither given nor recieved any help on this assignment */
+/* I pledge that I have neither given nor received any help on this assignment */
 
 // Inline implementation of the Array_Iterator class
 

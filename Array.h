@@ -1,3 +1,5 @@
+/* I pledge that I have neither given nor received any help on this assignment */
+
 /*
   This is the basic implementation for a dynamic array. Inherits from Array class
 */
@@ -6,16 +8,6 @@
 #define _ARRAY_H_
 
 #include "Array_Base.h"
-
-// COMMENT Replace this with the structure we discussed in class:
-//   Array_Base
-//   Fixed_Array: Array_Base
-//   Array : Array_Base
-//
-
-// REPLY Implemented the suggested structure. Array_Base includes methods used in both
-// Fixed_Array and Array. Array and Fixed_Array both inherit from Arrah_Base in order
-// to use these methods
 
 template <typename T>
 class Array : public Array_Base<T>

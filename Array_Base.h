@@ -1,23 +1,9 @@
-/*
-  Honor Pledge:
-
-  I pledge that I have neither given nor received any
-  help on this assignment
-*/
+/* I pledge that I have neither given nor received any help on this assignment */
 
 #ifndef _ARRAY_BASE_H_
 #define _ARRAY_BASE_H_
 
 #include <cstring>          // for size_t definition
-
-// COMMENT Replace this with the structure we discussed in class:
-//   Array_Base
-//   Fixed_Array: Array_Base
-//   Array : Array_Base
-//
-
-// REPLY Implemented the recommended structure. Array_Base includes methods used in both
-// Fixed_Array and Array. Array and Fixed_Array both inherit from Array_Base
 
 template <typename T>
 class Array_Base
