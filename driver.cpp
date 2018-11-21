@@ -1,3 +1,5 @@
+/* I pledge that I have neither given nor received any help on this assignment */
+
 #include "Infix_Expr_Evaluator.h"
 
 // COMMENT: Instead of using C functions to implement parts of the
