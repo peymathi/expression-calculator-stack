@@ -1,8 +1,8 @@
-// Assignment 3 MPC
 
-project (assignment3) {
-  exename = assignment3.exe
-  install = .
+
+project (expression_calc_stack) {
+  exename = expression_calc_stack.exe
+  install = ./bin
   includes += ./headers ./source ./inline ./bin ./template
   exeout = ./bin
 
