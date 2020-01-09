@@ -6,7 +6,7 @@ CXX           = g++
 LD            = $(CXX) $(CCFLAGS) $(CPPFLAGS)
 AR            = ar
 PICFLAGS      = -fPIC
-CPPFLAGS      = $(PICFLAGS) $(GENFLAGS) -std=c++11 -D_REENTRANT
+CPPFLAGS      = $(PICFLAGS) $(GENFLAGS) -std=c++11 -D_REENTRANT -I"./headers" -I"./source" -I"./inline" -I"./bin" -I"./template"
 OBJEXT        = .o
 OUTPUT_OPTION = -o "$@"
 COMPILE.c     = $(CC) $(CFLAGS) $(CPPFLAGS) -c
@@ -15,8 +15,8 @@ LDFLAGS       = -L"."
 CCC           = $(CXX)
 MAKEFILE      = Makefile.assignment3
 DEPENDENCIES  = .depend.$(MAKEFILE)
-BTARGETDIR    = ./
-BIN           = $(BTARGETDIR)assignment3$(EXESUFFIX)$(EXEEXT)
+BTARGETDIR    = ./bin/
+BIN           = $(BTARGETDIR)assignment3.exe$(EXESUFFIX)$(EXEEXT)
 CAT           = cat
 MV            = mv -f
 RM            = rm -rf
@@ -31,8 +31,8 @@ LIBPREFIX     = lib
 LIBSUFFIX     = 
 GENFLAGS      = -O
 LDLIBS        = -ldl $(subst lib,-l,$(sort $(basename $(notdir $(wildcard /usr/lib/librt.so /lib/librt.so))))) -lpthread
-OBJS          = driver$(OBJEXT) Stack_Expr_Command_Factory$(OBJEXT) Infix_Expr_Evaluator$(OBJEXT) Add_Expr_Command$(OBJEXT) Subtract_Expr_Command$(OBJEXT) Multiply_Expr_Command$(OBJEXT) Divide_Expr_Command$(OBJEXT) Mod_Expr_Command$(OBJEXT) Bin_Expr_Command$(OBJEXT) Num_Expr_Command$(OBJEXT) Unary_Expr_Command$(OBJEXT) Expr_Command_Factory$(OBJEXT) Expr_Command$(OBJEXT)
-SRC           = driver.cpp Stack_Expr_Command_Factory.cpp Infix_Expr_Evaluator.cpp Add_Expr_Command.cpp Subtract_Expr_Command.cpp Multiply_Expr_Command.cpp Divide_Expr_Command.cpp Mod_Expr_Command.cpp Bin_Expr_Command.cpp Num_Expr_Command.cpp Unary_Expr_Command.cpp Expr_Command_Factory.cpp Expr_Command.cpp
+OBJS          = ./source/Add_Expr_Command$(OBJEXT) ./source/Bin_Expr_Command$(OBJEXT) ./source/Divide_Expr_Command$(OBJEXT) ./source/Expr_Command$(OBJEXT) ./source/Expr_Command_Factory$(OBJEXT) ./source/Infix_Expr_Evaluator$(OBJEXT) ./source/Mod_Expr_Command$(OBJEXT) ./source/Multiply_Expr_Command$(OBJEXT) ./source/Num_Expr_Command$(OBJEXT) ./source/Stack_Expr_Command_Factory$(OBJEXT) ./source/Subtract_Expr_Command$(OBJEXT) ./source/Unary_Expr_Command$(OBJEXT) ./source/driver$(OBJEXT)
+SRC           = ./source/Add_Expr_Command.cpp ./source/Bin_Expr_Command.cpp ./source/Divide_Expr_Command.cpp ./source/Expr_Command.cpp ./source/Expr_Command_Factory.cpp ./source/Infix_Expr_Evaluator.cpp ./source/Mod_Expr_Command.cpp ./source/Multiply_Expr_Command.cpp ./source/Num_Expr_Command.cpp ./source/Stack_Expr_Command_Factory.cpp ./source/Subtract_Expr_Command.cpp ./source/Unary_Expr_Command.cpp ./source/driver.cpp
 LINK.cc       = $(LD) $(LDFLAGS)
 EXPORTFLAGS   = 
 DEPLIBS       = $(foreach lib, , $(foreach libpath, ., $(wildcard $(libpath)/lib$(lib).a)))
@@ -50,44 +50,44 @@ $(BIN): $(OBJS) $(DEPLIBS)
 generated: $(GENERATED_DIRTY)
 	@-:
 
-driver$(OBJEXT): driver.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) driver.cpp
+./source/Add_Expr_Command$(OBJEXT): ./source/Add_Expr_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Add_Expr_Command.cpp
 
-Stack_Expr_Command_Factory$(OBJEXT): Stack_Expr_Command_Factory.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Stack_Expr_Command_Factory.cpp
+./source/Bin_Expr_Command$(OBJEXT): ./source/Bin_Expr_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Bin_Expr_Command.cpp
 
-Infix_Expr_Evaluator$(OBJEXT): Infix_Expr_Evaluator.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Infix_Expr_Evaluator.cpp
+./source/Divide_Expr_Command$(OBJEXT): ./source/Divide_Expr_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Divide_Expr_Command.cpp
 
-Add_Expr_Command$(OBJEXT): Add_Expr_Command.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Add_Expr_Command.cpp
+./source/Expr_Command$(OBJEXT): ./source/Expr_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Expr_Command.cpp
 
-Subtract_Expr_Command$(OBJEXT): Subtract_Expr_Command.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Subtract_Expr_Command.cpp
+./source/Expr_Command_Factory$(OBJEXT): ./source/Expr_Command_Factory.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Expr_Command_Factory.cpp
 
-Multiply_Expr_Command$(OBJEXT): Multiply_Expr_Command.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Multiply_Expr_Command.cpp
+./source/Infix_Expr_Evaluator$(OBJEXT): ./source/Infix_Expr_Evaluator.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Infix_Expr_Evaluator.cpp
 
-Divide_Expr_Command$(OBJEXT): Divide_Expr_Command.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Divide_Expr_Command.cpp
+./source/Mod_Expr_Command$(OBJEXT): ./source/Mod_Expr_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Mod_Expr_Command.cpp
 
-Mod_Expr_Command$(OBJEXT): Mod_Expr_Command.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Mod_Expr_Command.cpp
+./source/Multiply_Expr_Command$(OBJEXT): ./source/Multiply_Expr_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Multiply_Expr_Command.cpp
 
-Bin_Expr_Command$(OBJEXT): Bin_Expr_Command.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Bin_Expr_Command.cpp
+./source/Num_Expr_Command$(OBJEXT): ./source/Num_Expr_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Num_Expr_Command.cpp
 
-Num_Expr_Command$(OBJEXT): Num_Expr_Command.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Num_Expr_Command.cpp
+./source/Stack_Expr_Command_Factory$(OBJEXT): ./source/Stack_Expr_Command_Factory.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Stack_Expr_Command_Factory.cpp
 
-Unary_Expr_Command$(OBJEXT): Unary_Expr_Command.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Unary_Expr_Command.cpp
+./source/Subtract_Expr_Command$(OBJEXT): ./source/Subtract_Expr_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Subtract_Expr_Command.cpp
 
-Expr_Command_Factory$(OBJEXT): Expr_Command_Factory.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Expr_Command_Factory.cpp
+./source/Unary_Expr_Command$(OBJEXT): ./source/Unary_Expr_Command.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/Unary_Expr_Command.cpp
 
-Expr_Command$(OBJEXT): Expr_Command.cpp
-	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) Expr_Command.cpp
+./source/driver$(OBJEXT): ./source/driver.cpp
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ./source/driver.cpp
 
 clean:
 	-$(RM) $(OBJS)
@@ -107,9 +107,3 @@ depend:
 	-$(MPC_ROOT)/depgen.pl  $(CFLAGS) $(CCFLAGS) $(CPPFLAGS) -f $(DEPENDENCIES) $(SRC) 2> $(NUL)
 
 -include $(DEPENDENCIES)
-
-run:
-	./assignment3
-
-val:
-	valgrind --tool=memcheck --log-file=Valgrind.txt ./assignment3

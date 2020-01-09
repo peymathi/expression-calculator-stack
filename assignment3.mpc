@@ -1,66 +1,31 @@
 // Assignment 3 MPC
 
 project (assignment3) {
-  exename = assignment3
+  exename = assignment3.exe
   install = .
+  includes += ./headers ./source ./inline ./bin ./template
+  exeout = ./bin
 
   specific (make, gnuance) {
     compile_flags += -std=c++11
   }
 
   Header_Files {
-    Array.h
-    Stack.h
-    Array_Base.h
-    Expr_Command.h
-    Bin_Expr_Command.h
-    Unary_Expr_Command.h
-    Num_Expr_Command.h
-    Add_Expr_Command.h
-    Subtract_Expr_Command.h
-    Multiply_Expr_Command.h
-    Divide_Expr_Command.h
-    Mod_Expr_Command.h
-    Array_Iterator.h
-    Expr_Command_Factory.h
-    Stack_Expr_Command_Factory.h
-    Infix_Expr_Evaluator.h
-    Queue.h
+    ./headers
+
   }
 
   Inline_Files {
-    Fixed_Array.inl
-    Stack.inl
-    Array.inl
-    Array_Base.inl
-    Array_Iterator.inl
-    Stack_Expr_Command_Factory.inl
-    Infix_Expr_Evaluator.inl
-    Queue.inl
+    ./inline
+
   }
 
   Source_Files {
-    driver.cpp
-    Stack_Expr_Command_Factory.cpp
-    Infix_Expr_Evaluator.cpp
-    Add_Expr_Command.cpp
-    Subtract_Expr_Command.cpp
-    Multiply_Expr_Command.cpp
-    Divide_Expr_Command.cpp
-    Mod_Expr_Command.cpp
-    Bin_Expr_Command.cpp
-    Num_Expr_Command.cpp
-    Unary_Expr_Command.cpp
-    Expr_Command_Factory.cpp
-    Expr_Command.cpp
+    ./source
+
   }
 
   Template_Files {
-    Fixed_Array.cpp
-    Stack.cpp
-    Array.cpp
-    Array_Base.cpp
-    Array_Iterator.cpp
-    Queue.cpp
+    ./template
   }
 }
